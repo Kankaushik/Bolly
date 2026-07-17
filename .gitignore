@@ -1,0 +1,49 @@
+# .gitignore
+
+# Environment files (credentials and local settings)
+.env
+.env.local
+.env.*.local
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Docker local data volumes (if placed in repo)
+db_data/
+wordpress_data/
+
+# AI-Agent / Gemini specific outputs and walkthroughs
+.agents/
+.gemini/
+brain/
+walkthrough.md
+render_gallery.md
+implementation_plan.md
+task.md
+*.log
+*.tmp
+*.bak
+setup.ps1
+
+# Temporary / WordPress backups / uploads that shouldn't be in main repo
+wordpress/wp-content/uploads/
+wordpress/wp-content/blogs.dir/
+wordpress/wp-content/upgrade/
+wordpress/wp-content/backup-db/
+wp-config.php

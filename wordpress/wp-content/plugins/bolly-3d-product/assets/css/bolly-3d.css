@@ -1,0 +1,131 @@
+/* 3D Product Canvas Container styling */
+.bolly-3d-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 450px;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 24px;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.bolly-3d-container:active {
+    cursor: grabbing;
+}
+
+.bolly-3d-container canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    outline: none;
+}
+
+/* Loading Spinner & Backdrop */
+.bolly-3d-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ebe9f3; /* Matches page background */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    z-index: 10;
+    transition: opacity 0.5s ease;
+    border-radius: 24px;
+}
+
+.bolly-3d-loader p {
+    font-family: 'Outfit', sans-serif;
+    color: #56587a;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(90, 49, 244, 0.1);
+    border-top-color: #5a31f4; /* Royal purple spinner */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Container Loaded state */
+.bolly-3d-container.loaded .bolly-3d-loader {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Interaction guide/hint */
+.bolly-3d-drag-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(90, 49, 244, 0.15);
+    color: #5a31f4; /* Royal purple */
+    padding: 0.6rem 1.2rem;
+    border-radius: 30px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    pointer-events: none;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 20px rgba(90, 49, 244, 0.05);
+    opacity: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.bolly-3d-container.loaded .bolly-3d-drag-hint {
+    opacity: 0.85;
+}
+
+.bolly-3d-drag-hint .icon {
+    display: inline-block;
+    animation: nudge 2s ease-in-out infinite;
+}
+
+@keyframes nudge {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(3px);
+    }
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .bolly-3d-container {
+        min-height: 380px;
+    }
+    .bolly-3d-drag-hint {
+        bottom: 1.5rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+    }
+}

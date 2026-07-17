@@ -1,0 +1,61 @@
+services:
+  db:
+    image: mariadb:10.6
+    container_name: bolly_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - bolly-network
+
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    container_name: bolly_wordpress
+    restart: always
+    ports:
+      - "8082:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+    volumes:
+      - wordpress_data:/var/www/html
+      - ./wordpress/wp-content/themes/bolly-theme:/var/www/html/wp-content/themes/bolly-theme
+      - ./wordpress/wp-content/plugins/bolly-3d-product:/var/www/html/wp-content/plugins/bolly-3d-product
+    networks:
+      - bolly-network
+
+  wp-cli:
+    depends_on:
+      - wordpress
+      - db
+    image: wordpress:cli
+    container_name: bolly_wp_cli
+    volumes:
+      - wordpress_data:/var/www/html
+      - ./wordpress/wp-content/themes/bolly-theme:/var/www/html/wp-content/themes/bolly-theme
+      - ./wordpress/wp-content/plugins/bolly-3d-product:/var/www/html/wp-content/plugins/bolly-3d-product
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+    networks:
+      - bolly-network
+    entrypoint: [ "wp" ]
+
+volumes:
+  wordpress_data:
+  db_data:
+
+networks:
+  bolly-network:
+    driver: bridge
