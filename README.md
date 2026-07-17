@@ -1,4 +1,4 @@
-# bolly — Premium Organic Haircare
+# bolly - Premium Organic Haircare
 
 Welcome to **bolly**, a luxury organic shampoo brand landing page. 
 
